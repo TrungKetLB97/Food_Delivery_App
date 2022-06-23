@@ -6,9 +6,16 @@ import {
 
 const CartTab = () => {
     return (
-        <View>
-        </View>
-    )
+      <View
+        style={{
+          flex: 1,
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+      >
+        <Text>cart</Text>
+      </View>
+    );
 }
 
 export default CartTab
