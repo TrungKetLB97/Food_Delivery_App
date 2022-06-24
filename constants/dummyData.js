@@ -1,10 +1,10 @@
 import { icons, images } from "./";
 
 const myProfile = {
-    name: "User",
-    profile_image: images.profile,
-    address: "HA NOI"
-}
+  name: "User",
+  profile_image: images.profile,
+  address: "265 Đ. Cầu Giấy, Hà Nội, Việt Nam",
+};
 
 const categories = [
     {
