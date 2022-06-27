@@ -7,6 +7,7 @@ import {
     TextInput,
     FlatList
 } from 'react-native';
+import { FilterModal } from "../";
 import { HorizontalFoodCard, VerticalFoodCard } from "../../components";
 import { COLORS, FONTS, SIZES, icons, dummyData } from "../../constants";
 
@@ -48,6 +49,8 @@ const Home = () => {
     const [popular, setPopular] = React.useState([])
     const [recommends, setRecommends] = React.useState([])
     const [menuList, setMenuList] = React.useState([])
+
+    const [showFilterModal, setShowFilterModal] = React.useState(false)
     
     React.useEffect(() => {
         handleChangeCategory(selectedCategoryId, selectedMenuType)
@@ -119,7 +122,7 @@ const Home = () => {
 
                 {/* filter button */}
                 <TouchableOpacity
-                    //onPress
+                    onPress={() => setShowFilterModal(true)}
                 >
                     <Image 
                         source={icons.filter}
@@ -318,63 +321,68 @@ const Home = () => {
 
 
     return (
-        <View
-            style={{
-                flex: 1,
-            }}
-        >
-            {/* search */}
-            {renderSearch()}
+      <View
+        style={{
+          flex: 1,
+        }}
+      >
+        {/* search */}
+        {renderSearch()}
 
-            {/* list */}
-            <FlatList 
-                data={menuList}
-                keyExtractor={(item) => `${item.id}`}
-                showsVerticalScrollIndicator={false}
-                ListHeaderComponent={
-                    <View>
-                        {/* delivery to */}
-                        {renderDeliveryTo()}
+        {/* filter */}
+        {showFilterModal && (
+          <FilterModal
+            isVisible={showFilterModal}
+            onClose={() => setShowFilterModal(false)}
+          />
+        )}
 
-                        {/* food categories */}
-                        {renderFoodCategories()}
+        {/* list */}
+        <FlatList
+          data={menuList}
+          keyExtractor={(item) => `${item.id}`}
+          showsVerticalScrollIndicator={false}
+          ListHeaderComponent={
+            <View>
+              {/* delivery to */}
+              {renderDeliveryTo()}
 
-                        {/* popular */}
-                        {renderPopularSection()}
+              {/* food categories */}
+              {renderFoodCategories()}
 
-                        {/* recommended */}
-                        {renderRecommendedSection()}
+              {/* popular */}
+              {renderPopularSection()}
 
-                        {/* menu type */}
-                        {renderMenuTypes()}
+              {/* recommended */}
+              {renderRecommendedSection()}
 
-                    </View>
-                }
-                renderItem={({item, index}) => {
-                    return (
-                      <HorizontalFoodCard
-                        containerStyle={{
-                          height: 140,
-                          alignItems: "center",
-                          marginHorizontal: SIZES.padding,
-                          marginBottom: SIZES.radius,
-                        }}
-                        imageStyle={{
-                          marginTop: 20,
-                          height: 110,
-                          width: 110,
-                        }}
-                        item={item}
-                        onPress={() => console.log("HorizontalFoodCard")}
-                      />
-                    );
+              {/* menu type */}
+              {renderMenuTypes()}
+            </View>
+          }
+          renderItem={({ item, index }) => {
+            return (
+              <HorizontalFoodCard
+                containerStyle={{
+                  height: 140,
+                  alignItems: "center",
+                  marginHorizontal: SIZES.padding,
+                  marginBottom: SIZES.radius,
                 }}
-                ListFooterComponent={
-                    <View style={{height: 200}} />
-                }
-            />
-        </View>
-    )
+                imageStyle={{
+                  marginTop: 20,
+                  height: 110,
+                  width: 110,
+                }}
+                item={item}
+                onPress={() => console.log("HorizontalFoodCard")}
+              />
+            );
+          }}
+          ListFooterComponent={<View style={{ height: 200 }} />}
+        />
+      </View>
+    );
 }
 
 export default Home;
